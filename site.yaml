@@ -1,0 +1,5 @@
+---
+- import_playbook: /etc/ansible/playbooks/interfaces.yaml
+- import_playbook: /etc/ansible/playbooks/openvswitch.yaml
+- import_playbook: /etc/ansible/playbooks/routing.yaml
+#- import_playbook: /etc/ansible/playbooks/saveconf.yaml

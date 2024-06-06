@@ -1,0 +1,30 @@
+---
+- name: "SETUP INTERFACES TASK"
+  hosts: routers
+  connection: network_cli
+  gather_facts: false
+  tasks:
+
+  - name: "TASK 1 - Set Layer 3 of Router"
+    cisco.ios.ios_interfaces:
+      config:
+        - name: "{{ item.name }}"
+          enabled: true
+          mode: layer3
+    loop: "{{ interfaces }}"
+
+  - name: "TASK 2 - Setting up the IP Address"
+    cisco.ios.ios_l3_interfaces:
+      config:
+        - name: "{{ item.name }}"
+          ipv4:
+            - address: "{{ item.ip }}"
+    loop: "{{ interfaces }}"
+    when: item.ip is defined
+
+  - name: "TASK 3 - Make Sure The Interfaces State"
+    cisco.ios.ios_interfaces:
+      config:
+        enabled: true
+    when: (item.state is defined) and (item.state == "enabled")
+

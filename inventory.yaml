@@ -1,0 +1,23 @@
+---
+all:
+  children:
+    vswitches:
+      hosts:
+        OVS1:
+        OVS2:
+        OVS3:
+        OVS4:
+    routers:
+      hosts:
+        R1:
+        R2:
+        R3:
+        R4:
+        R5:
+        R6:
+    defroute:
+      hosts:
+        R1:
+        R2:
+        R3:
+        R4:

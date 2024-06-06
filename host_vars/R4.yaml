@@ -1,0 +1,21 @@
+---
+interfaces:
+  - name: FastEthernet1/0
+    state: enabled
+    ip: 192.168.40.2 255.255.255.0
+  - name: FastEthernet1/1
+    state: enabled
+    ip: 172.16.40.1 255.255.255.0
+  - name: FastEthernet1/2
+    state: enabled
+    ip: 172.16.44.1 255.255.255.0
+
+
+eigrp:
+  - no auto-summary
+  - network 172.16.40.0 0.0.0.255
+  - network 172.16.44.0 0.0.0.255
+  - network 192.168.0.0 0.0.255.255
+
+default_route:
+  - ip route 0.0.0.0 0.0.0.0 192.168.40.1

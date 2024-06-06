@@ -1,0 +1,43 @@
+---
+- name: "OPEN VSWITCH TASK"
+  hosts: vswitches
+  gather_facts: false
+  tasks:
+
+    - name: "TASK 1 - Make a bridge"
+      openvswitch.openvswitch.openvswitch_bridge:
+        bridge: br0
+        state: present
+      register: bridge
+
+    - name: "TASK 2 - Add port to bridge"
+      openvswitch.openvswitch.openvswitch_port:
+        bridge: br0
+        port: "{{ item.port }}"
+        state: "{{ item.state }}"
+        set: "{{ item.set }}"
+      loop: "{{ bridges }}"
+     
+    - name: "Adding Interface to Bridge"
+      openvswitch.openvswitch.openvswitch_port:
+        bridge: br0
+        port: eth5
+        state: present
+
+    - name: "TASK 3 - Setting up Interfaces"
+      shell: "{{ item }}"
+      loop: "{{ with_items }}"
+
+
+    - name: "TASK 4 - Make a bridge Controller"
+      openvswitch.openvswitch.openvswitch_bridge:
+        bridge: br1
+        state: present
+      register: bridge
+
+    - name: "TASK 5 - Setting up Controller"
+      command: "{{ item }}"
+      with_items: "{{ controller }}"
+      register: result
+
+

@@ -1,0 +1,34 @@
+---
+bridges:
+  - port: br0-internal
+    state: present
+    set: interface br0-internal type=internal
+  - port: br0-vxlan
+    state: present
+    set: interface br0-vxlan type=vxlan option:remote_ip=192.168.40.1 option:key=2000
+
+with_items:
+  - ip addr flush dev eth1
+  - ip addr flush dev eth5
+  - ip addr flush dev eth2
+  - ip addr flush dev br0
+  - ip addr flush dev br0-internal
+  - ip addr add 192.168.20.1/24 dev eth1
+  - ip link set dev eth1 up
+#  - ip addr add 192.168.15.2/24 dev eth2
+#  - ip link set dev eth2 up
+  - ip addr add 192.168.100.4/24 dev eth10
+  - ip link set dev eth10 up
+  - ip addr add 192.168.38.25/24 dev br0-internal
+  - ip link set dev br0-internal mtu 1450
+  - ip link set dev br0-internal up
+  - ip addr add 192.168.38.20/24 dev eth5
+  - ip link set dev eth5 up
+  - ip route add 0.0.0.0/0 via 192.168.20.2
+
+controller:
+  - ovs-vsctl set bridge br1 protocols=OpenFlow13
+  - ovs-ofctl -O OpenFlow13 dump-ports br1
+  - ovs-vsctl set bridge br1 stp_enable=true
+  - ovs-vsctl set-controller br1 tcp:192.168.100.2:6653
+
