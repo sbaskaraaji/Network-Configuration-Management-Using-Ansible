@@ -1,5 +1,10 @@
-# Ansible
+# Automate Network Provisioning on Private Cloud Network Architecture Using Ansible
 
-Here's my project due to completing my bachelor's degree, it just needs two important things to be finished, spirit and 2 years of being deadwood :'). 
+Ansible as agentless open source IT automation engine can really helped to orchestrate advanced workflows. This tool have been used on many different cases, wether on programing or networking. In this study case, there are:
 
-This project intends to automate network configuration on ios routers and virtual switches within centralized Ansible as a control node.
+* IOS Routers
+* Virtual Switches
+* CloudStack
+* Ansible
+
+That going to build as an environment, Ansible will act as a control node. The goal of this project is to complete network configuration L2, L3 and little bit of VXLAN, on IOS Routers and Virtual Switches that will act as a managed node, using Ansible Playbook. 
